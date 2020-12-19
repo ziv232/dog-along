@@ -1,0 +1,50 @@
+
+body {
+    background: radial-gradient(#e7e7e4,#dcddd4);
+}
+
+.container{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+.title{
+    margin-top: 20vh;
+    margin-bottom: 3vh;
+    text-align: center;
+    font-size: 8vh;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.fields{
+    width: 50vw;
+}
+
+.errorMsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    margin-top: 2rem;
+    font-size: 2.5vh;
+    background-color: #f8d6d6;
+    border: 1px solid #e07c7c;
+    border-radius: 0.3rem;
+    width: 70vw;
+}
+
+.progress-msg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

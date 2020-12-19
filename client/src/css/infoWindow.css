@@ -1,0 +1,76 @@
+
+.dialogContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.description{
+    display: flex;
+    justify-content: center;
+    font-size: 3vw;
+    direction: rtl;
+}
+
+.slider{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+
+.exitButton{
+    position: fixed;
+    background: transparent;
+    border-radius: 2rem;
+    border: none;
+    outline: none;
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+}
+
+.indexs{
+    font-size: 3vh;
+    margin-bottom: 3vh;
+}
+
+.addButton{
+    border: none;
+    outline: none;
+    background: transparent;
+
+}
+
+@media (min-width:300px) and (max-width: 400px){
+    .slider{
+        height: 40vh;
+        width: 70vw;
+    }
+}
+
+@media (min-width:400px) and (max-width: 600px){
+    .slider{
+        height: 50vh;
+        width: 70vw;
+    }
+}
+
+@media (min-width:600px) and (max-width: 768px){
+    .slider{
+        width: 80vw;
+        height: 60vh;
+    }
+    
+}
+@media (min-width:768px) and (max-width: 1057px){
+    .slider{
+        width: 70vw;
+        height: 80vh;
+    }
+    
+}
+
+@media (min-width: 1057px){
+    .slider{
+        width: 45vw;
+    }
+}

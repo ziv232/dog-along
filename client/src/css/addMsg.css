@@ -1,0 +1,25 @@
+
+
+
+.buttons-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.buttons{
+    font-size: 2rem;
+    margin-top: 4rem;
+    color: white;
+    background: radial-gradient(#1c3372,#294185);
+    border-radius: 2rem;
+    border: 0;
+    box-shadow: 0px 10px 15px 1px rgba(0,0,0,0.1);
+    padding: 1rem 1rem 1rem 1rem;
+    display: flex;
+    outline: none;
+}
+
+.buttons:hover{
+    background: radial-gradient(#253f86,#294185);
+}

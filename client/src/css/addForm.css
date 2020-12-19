@@ -1,0 +1,93 @@
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.exitButton{
+    opacity: 1;
+    width: 3rem;
+    border-radius: 2rem;
+    border: none;
+    outline: none;
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+}
+
+.fields{
+    width: 80vw;
+}
+
+.select-fields{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.fieldErrorMsg{
+    color: red;
+    font-size: 1.2rem;
+}
+
+
+.send-button{
+    font-size: 2.5vh;
+    color: white;
+    background: radial-gradient(#1c3372,#294185);
+    border-radius: 2rem;
+    border: 0;
+    box-shadow: 0px 10px 15px 1px rgba(0,0,0,0.1);
+    padding: 0.8vw 0.8vw 0.8vw 0.8vw;
+    display: flex;
+    outline: none;
+}
+
+
+.send-button:hover{
+    background: radial-gradient(#253f86,#294185);
+}
+
+.progress-msg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-butons{
+    font-size: 1.3rem;
+    color: white;
+    background: radial-gradient(#1c3372,#294185);
+    border-radius: 2rem;
+    border: 0;
+    box-shadow: 0px 10px 15px 1px rgba(0,0,0,0.1);
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    outline: none;
+    margin-top: 0.5rem;
+}
+
+.errorMsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    margin-top: 2rem;
+    font-size: 2.5vh;
+    background-color: #f8d6d6;
+    border: 1px solid #e07c7c;
+    border-radius: 0.3rem;
+    width: 60vw;
+}
+
+
+.progress-butons:hover{
+    background: radial-gradient(#253f86,#294185);
+}
+
+@media (min-width:800px){
+    .fields{
+        width: 50vw;
+    }
+}

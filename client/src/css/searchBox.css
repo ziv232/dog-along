@@ -1,0 +1,53 @@
+.search-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dialogContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.select-fields{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.buttonSearch{
+    background: transparent;
+    padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+    border-radius: 3rem;
+    border: none;
+    outline: none;
+}
+
+.exitButton{
+    background: transparent;
+    width: 3rem;
+    border-radius: 2rem;
+    border: none;
+    outline: none;
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+}
+
+.buttonContainer{
+    padding-top: 2rem;
+}
+
+.buttonSearch:hover{
+    background: #d5d6cf;
+    border: none;
+}
+
+.exitButton:hover{
+    background: #d5d6cf;
+    border: none;
+}
+
+.test{
+  background: radial-gradient(#e7e7e4,#dcddd4);
+}
