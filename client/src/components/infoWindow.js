@@ -60,14 +60,12 @@ function InfoWindow(props){
     }
 
     return(
-        <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
+        <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={false} maxWidth={'md'}>
             <Button variant="contained" color='inherit' className='exitButton' onClick={() => setInfoWindow(false)}><SvgExitButton/></Button>
             <div className="dialogContainer">
                 <DialogTitle style={{fontSize: '4vh'}}>{name}</DialogTitle>
-                <DialogContent>
-                <DialogContentText style={{direction: 'rtl', width: '60vw', flexWrap: 'wrap' , overflow: 'hidden', wordWrap: 'break-word',justifyContent: 'center', fontSize: '2.5vh'}}>
+                <DialogContent style={{direction: 'rtl',justifyItems: 'center', width: '80%', overflow: 'hidden', wordWrap: 'break-word', fontSize: '2.5vh'}}>
                     {description}
-                </DialogContentText>
                 </DialogContent>
                 <Slider items={photos} showThumbnails={false} showPlayButton={false} showBullets={true} showIndex={true}/>
                 <div className='indexs'>
