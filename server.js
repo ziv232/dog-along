@@ -17,8 +17,7 @@ const users = require('./routes/api/users')
 
 
 
-//mongodb+srv://dogalongadmin:eevee232@dogalongcluster.vfzcz.mongodb.net/dogalongDB?retryWrites=true&w=majority
-mongoose.connect('mongodb+srv://dogalongadmin:eevee232@dogalongcluster.vfzcz.mongodb.net/dogalongDB?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URL,
  {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true})
 .then(()=>{console.log('Server connected')});
 
