@@ -118,9 +118,7 @@ function Map(props){
                 </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => places.map(place => {
                    return <Marker clusterer={clusterer} key={place._id} position={{lat: place.coordinates[0], lng: place.coordinates[1]}} 
-                   onClick={() => {
-                       setSelectedPlace(place);
-                       }} />
+                   onClick={() => setSelectedPlace(place)} />
                 })}
             </MarkerClusterer>
                 {selectedPlace && (<InfoWindow position={{lat: selectedPlace.coordinates[0], lng: selectedPlace.coordinates[1]}} 
@@ -130,7 +128,7 @@ function Map(props){
                         <button className='details-button' onClick={() => fetchStories()}>פרטים נוספים</button>
                     </div>
                 </InfoWindow>)}
-                {selectedPlace && (<MyInfoWindow openInfoWindow={infoWindow} setInfoWindow={setInfoWindow} myPlace={selectedPlace} stories={storiesArray}/>)}
+                {selectedPlace && (<MyInfoWindow openInfoWindow={infoWindow} setInfoWindow={setInfoWindow} myPlace={selectedPlace} stories={storiesArray} setSelectedPlace={setSelectedPlace}/>)}
                 {addMsg && (<Marker position={toAdd}><InfoWindow zIndex={100} onCloseClick={() => {setAddingMode(false);
                                                                                     setAddMsg(false);}} position={toAdd}>
                     <div className='addInfoWindow'>

@@ -30,7 +30,8 @@
 
 .indexs{
     font-size: 3vh;
-    margin-bottom: 3vh;
+    margin-top: 6vh;
+    margin-bottom: 2vh;
 }
 
 .addButton{
@@ -39,6 +40,7 @@
     background: transparent;
 
 }
+
 
 @media (min-width:300px) and (max-width: 400px){
     .slider{

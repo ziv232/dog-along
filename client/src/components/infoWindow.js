@@ -15,14 +15,33 @@ const styles = {
     dialogPaper: {
     background: 'radial-gradient(#e7e7e4,#dcddd4)',
       color: 'black',
-      paddingBottom: '1rem',
       minHeight: '70vh',
-      borderRadius: '1rem'
+      marginBottom: '5vh',
+      borderRadius: '0.5rem',
+      borderStyle: 'solid',
+      borderColor: 'black',
+      border: 'thin',
+      overflowX: 'hidden',
+      '&::-webkit-scrollbar': {
+        width: '0.4em',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'darkgrey',
+        outline: '1px solid slategrey',
+        borderRadius: '1rem',
+        border: 'none',
+        outline: 'none'
+      }
+
     },
   };
 
 function InfoWindow(props){
-    const {openInfoWindow, setInfoWindow, myPlace, stories, classes} = props;
+    const {openInfoWindow, setInfoWindow, myPlace, stories, setSelectedPlace, classes} = props;
 
     //Add Another Story States
     const [addStory, setAddStory] = useState(false);
@@ -60,8 +79,8 @@ function InfoWindow(props){
     }
 
     return(
-        <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={false} maxWidth={'md'}>
-            <Button variant="contained" color='inherit' className='exitButton' onClick={() => setInfoWindow(false)}><SvgExitButton/></Button>
+        <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
+            <Button variant="contained" color='inherit' className='exitButton' onClick={() => {setInfoWindow(false); setSelectedPlace(null)}}><SvgExitButton/></Button>
             <div className="dialogContainer">
                 <DialogTitle style={{fontSize: '4vh'}}>{name}</DialogTitle>
                 <DialogContent style={{direction: 'rtl',justifyItems: 'center', width: '80%', overflow: 'hidden', wordWrap: 'break-word', fontSize: '2.5vh'}}>
@@ -79,7 +98,7 @@ function InfoWindow(props){
                         <Button type='button' variant="contained" color='primary' onClick={() => nextIndex()} >הבא</Button>
                     </Grid>
                 </Grid>
-                <Button variant="contained" color='inherit' onClick={() => setAddStory(true)} className='addButton'><SvgAddButton/></Button>
+                <Button style={{marginBottom: '2vh'}} variant="contained" color='inherit' onClick={() => setAddStory(true)} className='addButton'><SvgAddButton/></Button>
             </div>
             <AddStoryForm addStory={addStory} setAddStory={setAddStory} location={myPlace}/>
         </Dialog>

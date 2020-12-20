@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api"
+import { MarkerClusterer } from '@react-google-maps/api';
 import { Fab } from '@material-ui/core';
 import UserContext from '../context/userContext';
 import axios from 'axios';
@@ -12,6 +13,7 @@ import RequestInfoWindow from '../components/requestInfoWindow';
 const mapConStyle = {
     width: '100vw',
     height: '100vh',
+    position: 'absolute',
     top: 0,
     left: 0
 }
@@ -49,14 +51,6 @@ function AdminMap(props){
         if(userData.user != undefined){    
             axios.get('/api/requests/', {headers: {'x-auth-token': userData.token}}).then(res => {
                 setRequests(res.data);
-                setMarkers(
-                <div>
-                    {requests.map(request => {
-                    return <Marker key={request._id} position={{lat: request.coordinates[0], lng: request.coordinates[1]}}
-                    onClick={() => {
-                        setSelectedPlace(request);}} />
-                    })}
-                </div>)
             })
             .catch(err => console.log(err))
         }
@@ -104,7 +98,11 @@ function AdminMap(props){
                 <div></div>
                 <Fab color='primary' className='logoutButton' onClick={logOut}>התנתק</Fab>
             </div>
-            {markers}
+            <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => requests.map(request => {
+                   return <Marker clusterer={clusterer} key={request._id} position={{lat: request.coordinates[0], lng: request.coordinates[1]}} 
+                   onClick={() => setSelectedPlace(request)} />
+                })}
+            </MarkerClusterer>
             {selectedPlace && (<InfoWindow position={{lat: selectedPlace.coordinates[0], lng: selectedPlace.coordinates[1]}} 
                 onCloseClick={() => {setSelectedPlace(null)}}>
                     <div className='info-window'>
