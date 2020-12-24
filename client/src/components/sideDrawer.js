@@ -19,9 +19,9 @@ const sideDrawer = props => {
             <div className='side-drawer-top'>
                 <div className='sidebar-close-icon' onClick={props.drawerClickHandler}><AiIcons.AiOutlineClose /></div>
             </div>
-            <ul onClick={props.drawerClickHandler}>
-                <li><Link to="/"><span>בית</span></Link></li>
-                <li><Link to="/login"><span>התחברות</span></Link></li>
+            <ul>
+                <li onClick={props.drawerClickHandler}><Link to="/"><span>בית</span></Link></li>
+                <li onClick={props.drawerClickHandler}><Link to="/login"><span>התחברות</span></Link></li>
             </ul>
         </nav>
     )

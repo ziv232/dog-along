@@ -31,7 +31,6 @@
 .indexs{
     font-size: 3vh;
     margin-top: 6vh;
-    margin-bottom: 2vh;
 }
 
 .addButton{
@@ -41,6 +40,99 @@
 
 }
 
+
+.add-button{
+    background: #27AE60;
+	color: white;
+    border: 0 none;
+    font-size: 3vh;
+	border-radius: 1px;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+
+.add-button:hover, .add-button:active {
+    background: #27AE60;
+	box-shadow: 0 0 0 2px #dcddd4, 0 0 0 3px #27AE60;
+}
+
+.exit-button{
+    background-color: #bbb;
+	width: 6vh;
+	height: 6vh;
+	border-radius: 50%;
+	color: #000;
+	float: right;
+	font-weight: bold;
+	font-size: 5vh;
+	cursor: pointer;
+    color: red;
+	transform: rotate(135deg);
+    position: relative;
+    z-index: 100;
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    margin-left: 1vh;
+    margin-top: 1vh;
+	transition: all .1s ease-in-out
+}
+.exit-button:hover, .exit-button:active{
+    background-color: #F00;
+	color: #FFF
+}
+
+.pagination{
+    padding: 30px 0;
+  }
+  
+  .pagination ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .pagination a{
+    display: inline-block;
+    padding: 10px 18px;
+    color: #222;
+  }
+  .pagination a{
+    background-color: #2ecc71;
+    margin: auto 5px;
+    color: #fff;
+    border: 3px solid #2ecc71;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .pagination a:first-of-type:before{
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -25px;
+    border-top: 22px solid transparent;
+    border-bottom: 22px solid transparent;
+    border-right: 22px solid #2ecc71;
+  }
+  
+  .pagination a:last-of-type:after{
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -25px;
+    border-top: 22px solid transparent;
+    border-bottom: 22px solid transparent;
+    border-left: 22px solid #2ecc71;
+  }
+  
+  .pagination a:active, .pagination a:hover{
+    font-weight: bold;
+  }
+    
 
 @media (min-width:300px) and (max-width: 400px){
     .slider{

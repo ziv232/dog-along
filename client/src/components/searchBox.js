@@ -55,9 +55,9 @@ function SearchBox(props){
 
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={openSearchBox} onBackdropClick={() => setOpenSearchBox(false)} fullWidth={true} maxWidth={'sm'}>
-            <AppBar position='sticky' style={{background: 'radial-gradient(#e7e7e4,#dcddd4)'}}><Toolbar><Button variant="contained" color='inherit' className='exitButton' onClick={() => setOpenSearchBox(false)}><SvgExitButton/></Button></Toolbar></AppBar>
+           <button className='exit-button' onClick={() => setOpenSearchBox(false)}>+</button>
             <div className="dialogContainer">
-            <DialogTitle><div style={{fontSize: '2em', fontWeight: 'bold'}}>חיפוש מקומות</div></DialogTitle>
+            <DialogTitle><div style={{fontSize: '5vh', fontWeight: 'bold'}}>חיפוש מקומות</div></DialogTitle>
                 <FormControl style={{minWidth: 200}} className='select-fields'>
                     <InputLabel className={classes.dialogLabel}>
                     בחירת אזורים
@@ -96,9 +96,9 @@ function SearchBox(props){
                                 </MenuItem>))}
                         </Select>
                 </FormControl>
-                <div className="buttonContainer">
-                <Button variant="contained" color='inherit' onClick={handleSubmit}><SvgSearchButton/></Button>
                 </div>
+                <div className='button-container'>
+                <button className='search-button' onClick={handleSubmit}>חפש</button>
                 </div>
         </Dialog>
     )

@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
-import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api"
-import { MarkerClusterer } from '@react-google-maps/api';
-
+/*global google*/
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import { GoogleMap, Marker, useLoadScript, InfoWindow, Circle } from "@react-google-maps/api"
+import { MarkerClusterer} from '@react-google-maps/api';
 import axios from 'axios';
-import SearchIcon from '@material-ui/icons/Search';
+import ExploreIcon from '@material-ui/icons/Explore';
 import '../css/map.css'
 
 
@@ -14,6 +14,7 @@ import MyInfoWindow from './infoWindow';
 import AddForm from './addForm';
 
 //Icons
+import locationMarker from '../icons/locationMarker.svg';
 import amuta from '../icons/pet-shelter.png';
 
 require('dotenv').config();
@@ -50,11 +51,27 @@ function Map(props){
     const [addForm, setAddForm] = useState(false);
     const [storiesArray, setStoriesArray] = useState([]);
 
+    //Geolocation
+    const [isGeolocation, setGeolocation] = useState(false);
+    const [geoLat, setGeoLat] = useState(null);
+    const [geoLng, setGeoLng] = useState(null);
+
     const {isLoaded, loadError} = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: libraries,
         language: 'he',
     });
+
+    const geoMarker = (<div className='geo-marker'></div>)
+
+
+    
+    //Pan to the Location was given
+    const panLocation = useCallback(({lat, lng}) => {
+        setLatCenter(lat);
+        setLngCenter(lng);
+        mapRef.current.setZoom(14);
+    },[])
 
     const iconType = (type) => {
 
@@ -63,10 +80,30 @@ function Map(props){
     if(loadError) return "ERROR Loading Maps";
     if(!isLoaded) return "Loading Maps";
 
+
+
     function handleLoad(map) {
         mapRef.current = map;
 
     }
+
+
+    //Geolocation Function
+    const locateMe = () => {
+        navigator.geolocation.getCurrentPosition(
+            (location) => {
+                setGeoLat(location.coords.latitude);
+                setGeoLng(location.coords.longitude);
+                setGeolocation(true);
+               panLocation({
+                   lat: location.coords.latitude,
+                   lng: location.coords.longitude
+               }) 
+            },
+            () => null
+        );
+    }
+    
 
     const addPlace = (event) => {
         const coordinates = event.latLng.toJSON();
@@ -74,10 +111,9 @@ function Map(props){
         setToAddAsArray([coordinates.lat,coordinates.lng])
         setAddingMode(true);
         setAddMsg(true);
-        // setLatCenter(coordinates.lat);
-        // setLngCenter(coordinates.lng);
     }
     
+    //Center the Map every time it moves
     const handleCenterChanged = () => {
         if (!mapRef.current) return;
         const newPos = mapRef.current.getCenter().toJSON();
@@ -112,9 +148,8 @@ function Map(props){
             onCenterChanged={handleCenterChanged}
             onRightClick={addPlace} onDblClick={addPlace} onClick={() => setAddingMode(false)} clickableIcons={false}>
                 <div className="search-button-container">
-                    <button className='search-button' onClick={() => setOpenSearch(true)}>
-                        <SearchIcon fontSize='inherit' className='search-icon'></SearchIcon> חיפוש
-                    </button>
+                    <button className='pulse-button' onClick={() => setOpenSearch(true)}>חיפוש</button>
+                    <button className='location-button' onClick={locateMe}><ExploreIcon style={{fontSize: '5vh'}}/></button>
                 </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => places.map(place => {
                    return <Marker clusterer={clusterer} key={place._id} position={{lat: place.coordinates[0], lng: place.coordinates[1]}} 
@@ -128,6 +163,7 @@ function Map(props){
                         <button className='details-button' onClick={() => fetchStories()}>פרטים נוספים</button>
                     </div>
                 </InfoWindow>)}
+                {isGeolocation && (<Marker position={{lat: geoLat, lng: geoLng}} title='המיקום שלך' icon={locationMarker}/>)}
                 {selectedPlace && (<MyInfoWindow openInfoWindow={infoWindow} setInfoWindow={setInfoWindow} myPlace={selectedPlace} stories={storiesArray} setSelectedPlace={setSelectedPlace}/>)}
                 {addMsg && (<Marker position={toAdd}><InfoWindow zIndex={100} onCloseClick={() => {setAddingMode(false);
                                                                                     setAddMsg(false);}} position={toAdd}>

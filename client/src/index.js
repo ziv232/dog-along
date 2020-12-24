@@ -15,6 +15,7 @@ import AdminPanel from './components/adminPanel';
 
 function App(){
   const [sideDrawerOpen,setSideDrawer] = useState(false);
+  const [hamburger,setHamburger] = useState('hamburger');
   const [terms, setTerms] = useState(true);
   const [userData, setUserData] = useState({
     token: undefined,
@@ -65,9 +66,11 @@ function App(){
 
   const drawerToggleClickHandler = () => {
     if(sideDrawerOpen){
+      setHamburger('hamburger')
       setSideDrawer(false)
     }
     else{
+      setHamburger('hamburger is-active')
       setSideDrawer(true)
     }
   }
@@ -84,7 +87,7 @@ function App(){
     <div>
       <BrowserRouter>
       <UserContext.Provider value={{userData, setUserData}}>
-      <ToolBar drawerClickHandler={drawerToggleClickHandler} />
+      <ToolBar drawerClickHandler={drawerToggleClickHandler} hamburger={hamburger}/>
       <SideDrawer show={sideDrawerOpen}  drawerClickHandler={drawerToggleClickHandler}/>
       {backDrop}
         <Switch>

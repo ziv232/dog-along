@@ -80,7 +80,7 @@ function InfoWindow(props){
 
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
-            <Button variant="contained" color='inherit' className='exitButton' onClick={() => {setInfoWindow(false); setSelectedPlace(null)}}><SvgExitButton/></Button>
+            <button className='exit-button' onClick={() => {setInfoWindow(false); setSelectedPlace(null)}}>+</button>
             <div className="dialogContainer">
                 <DialogTitle style={{fontSize: '4vh'}}>{name}</DialogTitle>
                 <DialogContent style={{direction: 'rtl',justifyItems: 'center', width: '80%', overflow: 'hidden', wordWrap: 'break-word', fontSize: '2.5vh'}}>
@@ -90,15 +90,13 @@ function InfoWindow(props){
                 <div className='indexs'>
                     {`${index + 1}/${stories.length}`}
                 </div>
-                <Grid container style={{marginBottom: '3vh'}} spacing={2} direction='row' alignContent='center' justify='center'>
-                    <Grid item>
-                        <Button type='button' variant="contained" color='primary' onClick={() => previousIndex()}>הקודם</Button>
-                    </Grid>
-                    <Grid item>
-                        <Button type='button' variant="contained" color='primary' onClick={() => nextIndex()} >הבא</Button>
-                    </Grid>
-                </Grid>
-                <Button style={{marginBottom: '2vh'}} variant="contained" color='inherit' onClick={() => setAddStory(true)} className='addButton'><SvgAddButton/></Button>
+                <div class="pagination">
+                    <ul>
+                        <a onClick={() => previousIndex()}><li>הקודם</li></a>
+                        <a onClick={() => nextIndex()}><li>הבא</li></a>
+                    </ul>
+                 </div>
+                <button className='add-button' onClick={() => setAddStory(true)}>הוספת סיפור</button>
             </div>
             <AddStoryForm addStory={addStory} setAddStory={setAddStory} location={myPlace}/>
         </Dialog>

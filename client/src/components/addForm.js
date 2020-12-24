@@ -119,6 +119,14 @@ function AddForm(props){
         </div>)
             if(finishProgress){
                 requestMsg = <div className='progress-msg'>
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
                 <h2>הבקשה נשלחה בהצלחה</h2>
                 <Button variant="contained" color='primary' onClick={() => {
                     setProgressScreen(false);

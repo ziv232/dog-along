@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, BrowserRouter} from 'react-router-dom';
 import * as GoIcons from 'react-icons/go';
 import Logo from '../images/logo-grey.png';
 import '../css/toolBar.css';
 
-const toolBar = props => {
+const ToolBar = props => {
+
     return(
     <header className="toolbar">
         <nav className="toolbar-navigation">
-            <div className="menu-bar"><GoIcons.GoThreeBars onClick={props.drawerClickHandler}/></div>
-            <div className="toolbar-logo"><img className="logo" src={Logo}></img></div>
+        <div className={props.hamburger} onClick={props.drawerClickHandler}>
+          <span className="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
+        </div>
+            <div className="toolbar-logo">DogAlong</div>
             <div className="spacer"/>
             <div className="toolbar-navigation-items">
                 <ul>
@@ -21,5 +26,5 @@ const toolBar = props => {
     </header>
     )
 }
-
-export default toolBar;
+//<div className="toolbar-logo"><img className="logo" src={Logo}></img></div>
+export default ToolBar;
