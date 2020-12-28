@@ -70,11 +70,11 @@
 
 }
 
-.side-drawer li:active {
+.side-drawer li:active, .side-drawer li:hover {
     background: #2e3e4e;
 }
 
-.side-drawer a:active {
+.side-drawer a:active, .side-drawer a:hover  {
     color: rgb(233, 179, 33);
     border-left: 6px solid orange;   
 }

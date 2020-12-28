@@ -92,7 +92,7 @@ function AddForm(props){
 
     const sendRequest = (urls, publicIds) => {
         const data = {
-            coordinates: coordinates,
+            location: {type: 'Point', coordinates: [coordinates[1], coordinates[0]]},
             name: name,
             category: category,
             district: district,
@@ -127,7 +127,7 @@ function AddForm(props){
                             <div class="icon-fix"></div>
                         </div>
                     </div>
-                <h2>הבקשה נשלחה בהצלחה</h2>
+                <div className='text'>הבקשה נשלחה בהצלחה</div>
                 <Button variant="contained" color='primary' onClick={() => {
                     setProgressScreen(false);
                     setFinishProgress(false);
@@ -139,7 +139,13 @@ function AddForm(props){
             }
             if(errorProgress){
                 requestMsg = <div className='progress-msg'>
-                <h2>אירעה שגיאה, אנא נסו שנית</h2>
+                    <div className='container'>
+                    <div className="circle-border"></div>
+                        <div className="circle">  
+                        <div className="error"></div>
+                        </div>
+                    </div>
+                <div className='text-error'>אירעה שגיאה, אנא נסו שנית</div>
                 <Button variant="contained" color='primary' onClick={() => {
                     setProgressScreen(false);
                     setErrorProgress(false);}}>

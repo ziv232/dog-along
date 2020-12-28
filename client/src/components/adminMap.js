@@ -99,11 +99,11 @@ function AdminMap(props){
                 <Fab color='primary' className='logoutButton' onClick={logOut}>התנתק</Fab>
             </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => requests.map(request => {
-                   return <Marker clusterer={clusterer} key={request._id} position={{lat: request.coordinates[0], lng: request.coordinates[1]}} 
+                   return <Marker clusterer={clusterer} key={request._id} position={{lat: request.location.coordinates[1], lng: request.location.coordinates[0]}} 
                    onClick={() => setSelectedPlace(request)} />
                 })}
             </MarkerClusterer>
-            {selectedPlace && (<InfoWindow position={{lat: selectedPlace.coordinates[0], lng: selectedPlace.coordinates[1]}} 
+            {selectedPlace && (<InfoWindow position={{lat: selectedPlace.location.coordinates[1], lng: selectedPlace.location.coordinates[0]}} 
                 onCloseClick={() => {setSelectedPlace(null)}}>
                     <div className='info-window'>
                         {selectedPlace.name}

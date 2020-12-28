@@ -29,6 +29,26 @@ router.post('/review', (req, res) => {
     }).catch('The Operation Failed!')
 })
 
+router.post('/reviewByDistance', (req, res) => {
+    const data = req.body;
+    console.log(data);
+    Location.find({
+        location: {
+            $near: {
+              $geometry: {
+                 type: "Point" ,
+                 coordinates: [ data.lng , data.lat ]
+              },
+              $maxDistance: data.radius * 1000,
+            }
+          }
+    }).exec().then(data => {
+        console.log(data);
+        res.status(200).json(data)
+    })
+    .catch(err => res.status(400).json(err.message))
+})
+
 router.get('/fetchStories/:id', (req, res) => {
     Location.find({
         reference: {$eq: req.params.id}

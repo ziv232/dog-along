@@ -4,10 +4,17 @@ const Schema = mongoose.Schema;
 
 //Creating the Schema
 const LocationSchema = new Schema({
-    coordinates: {
-        type: Array,
-        required: true
-    },
+    location: {
+        type: {
+          type: String,
+          enum: ['Point'],
+          required: true
+        },
+        coordinates: {
+          type: [Number],
+          required: true,
+        },
+      },
     name: {
         type: String,
         required: true
@@ -50,6 +57,7 @@ const LocationSchema = new Schema({
         default: Date.now
     }
 })
+LocationSchema.index({location: '2dsphere'});
 
 module.exports = Location = mongoose.model('Location',LocationSchema);
 

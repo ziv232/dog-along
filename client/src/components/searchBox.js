@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Dialog, DialogTitle, Select, FormControl, InputLabel, Input, ListItemText, MenuItem, Checkbox, AppBar, Toolbar, Button } from '@material-ui/core';
-import { withStyles } from "@material-ui/core/styles";
+import { Dialog, DialogTitle, Select, FormControl, InputLabel, Input, ListItemText, MenuItem, Checkbox, Slider } from '@material-ui/core';
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import '../css/searchBox.css';
 import SvgSearchButton from './svgSearchButton';
 import SvgExitButton from './svgExitButton';
@@ -11,7 +11,7 @@ const styles = {
     background: 'radial-gradient(#e7e7e4,#dcddd4)',
       color: 'black',
       paddingBottom: '1rem',
-      minHeight: '48vh',
+      minHeight: '65vh',
       borderRadius: '1rem'
     },
     dialogLabel: {
@@ -20,11 +20,44 @@ const styles = {
     },
   };
 
+  const PrettoSlider = withStyles({
+    root: {
+      color: '#52af77',
+      height: 8,
+      width: 250
+    },
+    thumb: {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      marginTop: -8,
+      marginLeft: -12,
+      '&:focus, &:hover, &$active': {
+        boxShadow: 'inherit',
+      },
+    },
+    active: {},
+    valueLabel: {
+      left: 'calc(-50% + 4px)',
+    },
+    track: {
+      height: 8,
+      borderRadius: 4,
+    },
+    rail: {
+      height: 8,
+      borderRadius: 4,
+    },
+  })(Slider);
+
 function SearchBox(props){
 
-    const {openSearchBox, setOpenSearchBox, places, setPlaces, classes} = props;
+    const {openSearchBox, setOpenSearchBox, places, setPlaces, setGeoLocation, panLocation, setGeoLat, setGeoLng, classes} = props;
     const [districts, setDistricts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [searchBy, setSearchBy] = useState('region');
+    const [radius, setRadius] = useState(null);
     const districtOptions = ['צפון','מרכז','דרום'];
     const categoryOptions = ['גינות כלבים','חופים','מסלולי טיולים','עמותות','מקורות מים']
 
@@ -40,25 +73,67 @@ function SearchBox(props){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = {
-            districts: districts,
-            categories: categories
+        if(searchBy=='region'){
+            const data = {
+                districts: districts,
+                categories: categories
+            }
+            axios.post('/api/locations/review',data).then( res => setPlaces(res.data))
+            .catch(err => console.log(err));
+            setOpenSearchBox(false);
         }
-        axios.post('/api/locations/review',data).then( res => setPlaces(res.data))
-        .catch(err => console.log(err));
-
-
-
-        setOpenSearchBox(false);
+        else{
+            navigator.geolocation.getCurrentPosition(
+                (location) => {
+                    const data = {
+                        radius: radius,
+                        lat: location.coords.latitude,
+                        lng: location.coords.longitude,
+                        categories: categories
+                    }
+                    setGeoLat(location.coords.latitude);
+                    setGeoLng(location.coords.longitude);
+                    panLocation({
+                        lat: location.coords.latitude,
+                        lng: location.coords.longitude
+                    });
+                    setGeoLocation(true);
+                    axios.post('/api/locations/reviewByDistance',data).then( res => setPlaces(res.data))
+                    .catch(err => console.log(err));
+                    setOpenSearchBox(false);
+                },
+                () => {
+                    console.log('Failed to get users location');
+                }
+            )
+        }
     }
     
+    const handleSwitcher = (event) => {
+        console.log(event.target.value);
+        setSearchBy(event.target.value);
+    }
+
+    const handleSlider = (event, newValue) => {
+        console.log(newValue);
+        setRadius(newValue);
+    }
 
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={openSearchBox} onBackdropClick={() => setOpenSearchBox(false)} fullWidth={true} maxWidth={'sm'}>
            <button className='exit-button' onClick={() => setOpenSearchBox(false)}>+</button>
             <div className="dialogContainer">
             <DialogTitle><div style={{fontSize: '5vh', fontWeight: 'bold'}}>חיפוש מקומות</div></DialogTitle>
-                <FormControl style={{minWidth: 200}} className='select-fields'>
+            <div className="search-switcher">
+                <p className="fieldset">
+                    <input type="radio" name="duration-1" value="region" id="region" onChange={handleSwitcher}/>
+                    <label for="region">לפי אזור</label>
+                    <input type="radio" name="duration-1" value="distance" id="distance" onChange={handleSwitcher}/>
+                    <label for="distance">לפי מרחק</label>
+                    <span className="switch"></span>
+                </p>
+		    </div>
+              {searchBy=='region' ? <FormControl style={{minWidth: 200}} className='select-fields'>
                     <InputLabel className={classes.dialogLabel}>
                     בחירת אזורים
                     </InputLabel>
@@ -77,6 +152,7 @@ function SearchBox(props){
                                 </MenuItem>))}
                         </Select><br/>
                 </FormControl>
+                :   <PrettoSlider onChange={handleSlider} valueLabelDisplay="auto" aria-label="pretto slider" defaultValue={30} max={300}/>}
                 <FormControl style={{minWidth: 200}} className='select-fields'>
                 <InputLabel className={classes.dialogLabel}>
                     בחירת סוגי מקומות
@@ -105,3 +181,22 @@ function SearchBox(props){
 }
 export default withStyles(styles)(SearchBox);
 //<div>Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+/* <FormControl style={{minWidth: 200}} className='select-fields'>
+<InputLabel className={classes.dialogLabel}>
+בחירת אזורים
+</InputLabel>
+    <Select
+        multiple
+        value={districts}
+        onChange={handleDistrict}
+        name="district"
+        input={<Input />}
+        renderValue={selected => selected.join(", ")}
+        >
+        {districtOptions.map(district => (
+            <MenuItem key={district} value={district}>
+            <Checkbox color='primary' checked={districts.indexOf(district) > -1} />
+            <ListItemText primary={district} />
+            </MenuItem>))}
+    </Select><br/>
+</FormControl> */

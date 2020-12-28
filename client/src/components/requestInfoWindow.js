@@ -29,7 +29,7 @@ function RequestInfoWindow(props){
 
     const acceptRequest = () => {
         const location = {
-            coordinates: myPlace.coordinates,
+            location: {type: 'Point', coordinates: myPlace.location.coordinates},
             name: myPlace.name,
             category: myPlace.category,
             district: myPlace.district,

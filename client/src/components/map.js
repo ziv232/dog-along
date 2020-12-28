@@ -62,9 +62,6 @@ function Map(props){
         language: 'he',
     });
 
-    const geoMarker = (<div className='geo-marker'></div>)
-
-
     
     //Pan to the Location was given
     const panLocation = useCallback(({lat, lng}) => {
@@ -152,11 +149,11 @@ function Map(props){
                     <button className='location-button' onClick={locateMe}><ExploreIcon style={{fontSize: '5vh'}}/></button>
                 </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => places.map(place => {
-                   return <Marker clusterer={clusterer} key={place._id} position={{lat: place.coordinates[0], lng: place.coordinates[1]}} 
+                   return <Marker clusterer={clusterer} key={place._id} position={{lat: place.location.coordinates[1], lng: place.location.coordinates[0]}} 
                    onClick={() => setSelectedPlace(place)} />
                 })}
             </MarkerClusterer>
-                {selectedPlace && (<InfoWindow position={{lat: selectedPlace.coordinates[0], lng: selectedPlace.coordinates[1]}} 
+                {selectedPlace && (<InfoWindow position={{lat: selectedPlace.location.coordinates[1], lng: selectedPlace.location.coordinates[0]}} 
                 onCloseClick={() => {setSelectedPlace(null)}}>
                     <div className='info-window'>
                         {selectedPlace.name}
@@ -180,7 +177,8 @@ function Map(props){
                 </InfoWindow></Marker>)}
                 <AddForm addForm={addForm} setAddForm={setAddForm} setAddMsg={setAddMsg} coordinates={toAddAsArray}/>
                 <Terms terms={props.terms} setTerms={props.setTerms}/>
-                <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces}>
+                <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces} setGeoLocation={setGeolocation}
+                 panLocation={panLocation} setGeoLat={setGeoLat} setGeoLng={setGeoLng}>
                 </SearchBox>
             </GoogleMap>
         )
