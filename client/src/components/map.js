@@ -1,7 +1,8 @@
 /*global google*/
 import React, {useState, useEffect, useRef, useCallback} from 'react';
-import { GoogleMap, Marker, useLoadScript, InfoWindow, Circle } from "@react-google-maps/api"
+import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api"
 import { MarkerClusterer} from '@react-google-maps/api';
+import {Modal, Card, CardContent, CardMedia, Dialog} from '@material-ui/core';
 import axios from 'axios';
 import ExploreIcon from '@material-ui/icons/Explore';
 import '../css/map.css'
@@ -12,6 +13,7 @@ import SearchBox from './searchBox';
 import Terms from './terms';
 import MyInfoWindow from './infoWindow';
 import AddForm from './addForm';
+import LocationCard from './locationCard';
 
 //Icons
 import locationMarker from '../icons/locationMarker.svg';
@@ -43,6 +45,7 @@ function Map(props){
     const [places, setPlaces] = useState([]);
     const [markers, setMarkers] = useState('');
     const [selectedPlace, setSelectedPlace] = useState(null);
+    const [isSelected, setIsSelected] = useState(false);
     const [infoWindow, setInfoWindow] = useState(false);
     const [addingMode, setAddingMode] = useState(false);
     const [toAdd, setToAdd] = useState(null);
@@ -132,6 +135,18 @@ function Map(props){
         setInfoWindow(true);
     }
 
+    const fetchDetails = async (place) => {
+        await axios.get(`/api/locations/fetchStories/${place._id}`)
+        .then(res => {
+            console.log(res.data);
+            setStoriesArray(res.data);
+            const stories = [place].concat(res.data);
+            setStoriesArray(stories);
+            console.log(storiesArray)
+        })
+        .catch(err => console.log(err));
+    }
+
 
     return(
             <GoogleMap
@@ -150,16 +165,10 @@ function Map(props){
                 </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => places.map(place => {
                    return <Marker clusterer={clusterer} key={place._id} position={{lat: place.location.coordinates[1], lng: place.location.coordinates[0]}} 
-                   onClick={() => setSelectedPlace(place)} />
+                   onClick={() => { setSelectedPlace(place); setIsSelected(true); fetchDetails(place);}}   
+                                   onCloseClick={() => {setIsSelected(false); setSelectedPlace(null);}} />
                 })}
             </MarkerClusterer>
-                {selectedPlace && (<InfoWindow position={{lat: selectedPlace.location.coordinates[1], lng: selectedPlace.location.coordinates[0]}} 
-                onCloseClick={() => {setSelectedPlace(null)}}>
-                    <div className='info-window'>
-                        {selectedPlace.name}
-                        <button className='details-button' onClick={() => fetchStories()}>פרטים נוספים</button>
-                    </div>
-                </InfoWindow>)}
                 {isGeolocation && (<Marker position={{lat: geoLat, lng: geoLng}} title='המיקום שלך' icon={locationMarker}/>)}
                 {selectedPlace && (<MyInfoWindow openInfoWindow={infoWindow} setInfoWindow={setInfoWindow} myPlace={selectedPlace} stories={storiesArray} setSelectedPlace={setSelectedPlace}/>)}
                 {addMsg && (<Marker position={toAdd}><InfoWindow zIndex={100} onCloseClick={() => {setAddingMode(false);
@@ -178,8 +187,8 @@ function Map(props){
                 <AddForm addForm={addForm} setAddForm={setAddForm} setAddMsg={setAddMsg} coordinates={toAddAsArray}/>
                 <Terms terms={props.terms} setTerms={props.setTerms}/>
                 <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces} setGeoLocation={setGeolocation}
-                 panLocation={panLocation} setGeoLat={setGeoLat} setGeoLng={setGeoLng}>
-                </SearchBox>
+                 panLocation={panLocation} setGeoLat={setGeoLat} setGeoLng={setGeoLng}/>
+                {selectedPlace && (<LocationCard open={isSelected} location={selectedPlace} setOpen={setIsSelected} setInfoWindow={setInfoWindow} setSelectedPlace={setSelectedPlace}/>)}
             </GoogleMap>
         )
 }

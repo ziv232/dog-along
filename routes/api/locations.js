@@ -41,7 +41,9 @@ router.post('/reviewByDistance', (req, res) => {
               },
               $maxDistance: data.radius * 1000,
             }
-          }
+          },
+          category: {$in: data.categories},
+          reference: {$eq: null}
     }).exec().then(data => {
         console.log(data);
         res.status(200).json(data)

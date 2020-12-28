@@ -82,7 +82,7 @@ function InfoWindow(props){
         <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
             <button className='exit-button' onClick={() => {setInfoWindow(false); setSelectedPlace(null)}}>+</button>
             <div className="dialogContainer">
-                <DialogTitle style={{fontSize: '4vh'}}>{name}</DialogTitle>
+                <DialogTitle style={{fontSize: '4vh', direction: 'rtl', fontFamily: 'Roboto'}}>{name}</DialogTitle>
                 <DialogContent style={{direction: 'rtl',justifyItems: 'center', width: '80%', overflow: 'hidden', wordWrap: 'break-word', fontSize: '2.5vh'}}>
                     {description}
                 </DialogContent>
