@@ -24,7 +24,9 @@ const styles = {
     root: {
       color: '#52af77',
       height: 8,
-      width: 250
+      width: 250,
+      marginTop: '3vh',
+      marginBottom: '5vh'
     },
     thumb: {
       height: 24,
@@ -39,7 +41,7 @@ const styles = {
     },
     active: {},
     valueLabel: {
-      left: 'calc(-50% + 4px)',
+      left: 'calc(-50% + 5px)',
     },
     track: {
       height: 8,
@@ -133,7 +135,7 @@ function SearchBox(props){
                     <span className="switch"></span>
                 </p>
 		    </div>
-              {searchBy=='region' ? <FormControl style={{minWidth: 200}} className='select-fields'>
+              {searchBy=='region' ? <FormControl style={{minWidth: 200, marginBottom: '5vh'}} className='select-fields'>
                     <InputLabel className={classes.dialogLabel}>
                     בחירת אזורים
                     </InputLabel>

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Dialog, DialogTitle, Grid, DialogContent, Button, DialogContentText } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
-import SvgExitButton from './svgExitButton';
-import SvgAddButton from './svgAddButton';
+import { formatRelative, parseISO } from 'date-fns'
+import { he } from 'date-fns/locale'
 import '../css/infoWindow.css';
 import "react-image-gallery/styles/css/image-gallery.css";
 import Slider from 'react-image-gallery';
@@ -49,6 +49,8 @@ function InfoWindow(props){
     //Stories States
     const [index, setIndex] = useState(0);
     const [name, setName] = useState(myPlace.name);
+    const [date, setDate] = useState(myPlace.date);
+    const [donor, setDonor] = useState(myPlace.donor);
     const [description, setDescription] = useState(myPlace.description);
     const [photos, setPhotos] = useState(myPlace.photos.urls.map( image => {return {original: image, thumbnail: image}}));
 
@@ -56,6 +58,8 @@ function InfoWindow(props){
         setPhotos(stories[idx].photos.urls.map( image => {return {original: image, thumbnail: image}}))
         setDescription(stories[idx].description)
         setName(stories[idx].name);
+        setDate(stories[idx].date);
+        setDonor(stories[idx].donor);
 
     }
 
@@ -82,7 +86,13 @@ function InfoWindow(props){
         <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
             <button className='exit-button' onClick={() => {setInfoWindow(false); setSelectedPlace(null)}}>+</button>
             <div className="dialogContainer">
-                <DialogTitle style={{fontSize: '4vh', direction: 'rtl', fontFamily: 'Roboto'}}>{name}</DialogTitle>
+                <div style={{fontSize: '4vh', direction: 'rtl', textAlign: 'center', marginTop: '2vh'}}>{name}</div>
+                <div style={{direction: 'rtl', fontSize: '2vh', marginTop: '2vh', color: 'grey'}}>
+                    נוסף על ידי {donor}
+                </div>
+                <div style={{direction: 'rtl', fontSize: '2vh', color: 'grey'}}>
+                {formatRelative(parseISO(date), new Date(), { locale: he })}
+                </div>
                 <DialogContent style={{direction: 'rtl',justifyItems: 'center', width: '80%', overflow: 'hidden', wordWrap: 'break-word', fontSize: '2.5vh'}}>
                     {description}
                 </DialogContent>
@@ -96,7 +106,7 @@ function InfoWindow(props){
                         <a onClick={() => nextIndex()}><li>הבא</li></a>
                     </ul>
                  </div>
-                <button className='add-button' onClick={() => setAddStory(true)}>הוספת סיפור</button>
+                <button className='addButton' onClick={() => setAddStory(true)}>הוספת סיפור</button>
             </div>
             <AddStoryForm addStory={addStory} setAddStory={setAddStory} location={myPlace}/>
         </Dialog>

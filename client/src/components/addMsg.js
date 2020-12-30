@@ -6,33 +6,30 @@ import '../css/addMsg.css';
 
 const styles = {
     dialogPaper: {
-    background: 'radial-gradient(#e7e7e4,#dcddd4)',
+      top: '-20%',
+      background: 'radial-gradient(#e7e7e4,#dcddd4)',
       color: 'black',
-      paddingBottom: '1rem',
       minHeight: '15vh',
       borderRadius: '1rem',
       textAlign: 'center',
+      padding: '1vh 1vh 1vh 1vh'
     },
-    dialogLabel: {
-        color: 'black',
-        fontSize: '1.3rem'
-    }
+
 };
 
 function AddMsg(props){
 
-    const {addMsg,setAddMsg, addMode, setAddMode, classes} = props;
+    const { addMsg, setAddMsg, setAddForm, classes} = props;
 
     return(
-        <Dialog classes={{ paper: classes.dialogPaper }} open={addMsg} fullWidth={true} maxWidth={'sm'}>
-            <DialogTitle className={classes.dialogLabel}>?האם אתה בטוח שברצונך להוסיף מקום זה</DialogTitle>
-            <DialogContent>
+        <Dialog classes={{ paper: classes.dialogPaper }} open={addMsg} hideBackdrop={true} fullWidth={true} maxWidth={'sm'}>
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', justifyItems: 'center'}}>
+            <div style={{fontSize: '3vh', direction: 'rtl', marginTop: '3vh'}}>האם אתה בטוח שברצונך להוסיף מקום זה?</div>
                 <div className='buttons-container'>
-                    <button className='buttons'>כן</button>
-                    <button className='buttons' onClick={() => {setAddMsg(false);
-                                            setAddMode(false);}}>לא</button>
+                    <button className='add-buttons' onClick={() => {setAddMsg(false);}}>לא</button>
+                    <button className='add-buttons' onClick={() => {setAddForm(true); setAddMsg(false);}}>כן</button>
                 </div>
-            </DialogContent>
+            </div>
         </Dialog>
     )
 }

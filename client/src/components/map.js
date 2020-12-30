@@ -14,6 +14,7 @@ import Terms from './terms';
 import MyInfoWindow from './infoWindow';
 import AddForm from './addForm';
 import LocationCard from './locationCard';
+import AddMsg from './addMsg';
 
 //Icons
 import locationMarker from '../icons/locationMarker.svg';
@@ -32,7 +33,8 @@ const mapConStyle = {
 }
 const options = {
     disableDefaultUI: true,
-    zoomControl: false
+    zoomControl: true,
+    disableDoubleClickZoom: true
 }
 
 const libraries = []
@@ -109,6 +111,8 @@ function Map(props){
         const coordinates = event.latLng.toJSON();
         setToAdd(coordinates);
         setToAddAsArray([coordinates.lat,coordinates.lng])
+        setLatCenter(coordinates.lat);
+        setLngCenter(coordinates.lng);
         setAddingMode(true);
         setAddMsg(true);
     }
@@ -171,19 +175,8 @@ function Map(props){
             </MarkerClusterer>
                 {isGeolocation && (<Marker position={{lat: geoLat, lng: geoLng}} title='המיקום שלך' icon={locationMarker}/>)}
                 {selectedPlace && (<MyInfoWindow openInfoWindow={infoWindow} setInfoWindow={setInfoWindow} myPlace={selectedPlace} stories={storiesArray} setSelectedPlace={setSelectedPlace}/>)}
-                {addMsg && (<Marker position={toAdd}><InfoWindow zIndex={100} onCloseClick={() => {setAddingMode(false);
-                                                                                    setAddMsg(false);}} position={toAdd}>
-                    <div className='addInfoWindow'>
-                        האם אתה בטוח שברצונך להוסיף מקום זה?
-                        <div className='buttons-container'>
-                        <button className='add-buttons' onClick={() => setAddForm(true)}>כן</button>
-                        <button className='add-buttons' onClick={() => {
-                            setAddingMode(false);
-                            setAddMsg(false);
-                        }}>לא</button>
-                        </div>
-                    </div>
-                </InfoWindow></Marker>)}
+                {addMsg && (<Marker position={toAdd}></Marker>)}
+                {addMsg && (<AddMsg addMsg={addMsg} setAddMsg={setAddMsg} setAddForm={setAddForm} />)}
                 <AddForm addForm={addForm} setAddForm={setAddForm} setAddMsg={setAddMsg} coordinates={toAddAsArray}/>
                 <Terms terms={props.terms} setTerms={props.setTerms}/>
                 <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces} setGeoLocation={setGeolocation}

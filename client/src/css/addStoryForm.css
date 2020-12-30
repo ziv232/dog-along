@@ -6,7 +6,7 @@
 }
 
 .fields{
-    width: 80vw;
+    width: 80%;
 }
 
 .select-fields{
@@ -34,6 +34,39 @@
     border-radius: 0.3rem;
     width: 60vw;
 }
+
+/* Add Buttons*/
+
+.add-buttons
+{
+    font-size: 2.5vh;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    width: 30%;
+    margin: auto;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: none;
+    background: #2ecc71;
+    box-shadow: 0 5px 1px #27ae60;
+}
+
+.add-buttons:hover
+{
+    background: #27ae60;
+    box-shadow: 0 5px 1px #145b32;
+}
+
+.add-buttons:active
+{
+    border-top: 5px solid white;
+    box-shadow: none;
+}
+
+/* END Add Buttons*/
 
 /* Success Check Mark */
 

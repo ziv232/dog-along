@@ -33,31 +33,41 @@
     margin-top: 6vh;
 }
 
-.addButton{
-    border: none;
-    outline: none;
-    background: transparent;
 
-}
+/* 3D Add Button */
 
-
-.add-button{
-    background: #27AE60;
-	color: white;
-    border: 0 none;
+.addButton
+{
     font-size: 3vh;
-	border-radius: 1px;
+    width: 25vh;
+    height: 5vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3vh;
+    padding: 5px 5px;
     cursor: pointer;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
     outline: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-	padding: 10px 5px;
-	margin: 10px 5px;
+    background: #2ecc71;
+    box-shadow: 0 5px 1px #27ae60;
 }
 
-.add-button:hover, .add-button:active {
-    background: #27AE60;
-	box-shadow: 0 0 0 2px #dcddd4, 0 0 0 3px #27AE60;
+.addButton:hover
+{
+    background: #27ae60;
+    box-shadow: 0 5px 1px #145b32;
 }
+
+.addButton:active
+{
+    border-top: 5px solid white;
+    box-shadow: none;
+}
+
+/* END 3D Add Button */
 
 .exit-button{
     background-color: #bbb;
@@ -71,7 +81,7 @@
 	cursor: pointer;
     color: red;
 	transform: rotate(135deg);
-    position: relative;
+    position: fixed;
     z-index: 100;
     border: none;
     outline: none;
@@ -107,6 +117,7 @@
     border: 3px solid #2ecc71;
     position: relative;
     cursor: pointer;
+    box-shadow: 0 3px 7px #27ae60;
   }
   
   .pagination a:first-of-type:before{

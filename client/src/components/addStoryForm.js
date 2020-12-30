@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import FormData from 'form-data';
 import ReCAPTCHA from "react-google-recaptcha";
-import {Grid, Dialog, Button, DialogTitle, DialogContent,Form, FormControl, TextField, Select, InputLabel, Input, ListItemText, MenuItem, CircularProgress} from '@material-ui/core';
+import {Grid, Dialog, Button, DialogContent, FormControl, TextField, CircularProgress} from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import '../css/addStoryForm.css';
 
@@ -11,8 +11,24 @@ const styles = {
     background: 'radial-gradient(#e7e7e4,#dcddd4)',
       color: 'black',
       paddingBottom: '1rem',
-      minHeight: '80vh',
+      minHeight: '70vh',
       borderRadius: '1rem',
+      overflowX: 'hidden',
+      '&::-webkit-scrollbar': {
+        width: '0.4em',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'darkgrey',
+        outline: '1px solid slategrey',
+        borderRadius: '1rem',
+        border: 'none',
+        outline: 'none'
+      }
+
     },
     dialogLabel: {
         color: 'black',
@@ -193,17 +209,23 @@ function AddStoryForm(props){
         }
     }
 
+    const handleExit = () => {
+        setFieldsError('');
+        setRecaptchaErrorMsg('');
+        setPhotosErrorMsgBigger('');
+        setPhotosErrorMsgNone('');
+        setDonorErrorMsg('');
+        setDescriptionErrorMsg('');
+        setAddStory(false);
+    }
+
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={addStory} fullWidth={true} maxWidth={'md'}>
             <form onSubmit={handleSubmit} style={{direction: 'rtl'}}  className='formContainer'>
-                <div style={{fontSize: '3em', fontWeight: 'bold'}}>הוספת הסיפור שלך</div>
-                <FormControl>
-                    <TextField className='fields'  label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
-                </FormControl>
+                <div style={{fontSize: '4vh', marginTop: '2vh', marginBottom: '2vh', fontWeight: 'bold'}}>הוספת הסיפור שלך</div>
+                    <TextField style={{width: '80%'}}   label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
                 {donorErrorMsg}<br/>
-                <FormControl>
-                    <TextField className='fields' multiline variant='filled' rows='10' type='rtl' label='תיאור' onChange={handleDescription}/>
-                </FormControl>
+                    <TextField style={{width: '80%'}} multiline variant='filled' rows='10' type='rtl' label='תיאור' onChange={handleDescription}/>
                 {descriptionErrorMsg}<br/>
                 <input accept="image/*" style={{ display: 'none' }} id="raised-button-file" multiple type="file" onChange={handlePhotos}/>
                     <label htmlFor="raised-button-file">
@@ -214,14 +236,10 @@ function AddStoryForm(props){
                 {photosErrorMsgBigger}{photosErrorMsgNone}<br/>
                 <ReCAPTCHA  sitekey={process.env.REACT_APP_RECAPTCHA_KEY} onChange={() => setRecaptcha(true)} onExpired={() => setRecaptcha(false)}/>
                 {recaptchaErrorMsg}<br/>
-                <Grid container spacing={2} direction='row' alignContent='center' justify='center'>
-                    <Grid item>
-                         <Button type='submit' variant="contained" color='primary' >שליחת בקשה</Button>
-                    </Grid>
-                    <Grid item>
-                         <Button type='reset' variant="contained" color='primary' onClick={() => setAddStory(false)}>ביטול</Button>
-                    </Grid>
-                </Grid>
+                <div className='buttons-container'>
+                    <button className='add-buttons' type='submit' >שליחת בקשה</button>
+                    <button className='add-buttons' type='reset' onClick={handleExit}>ביטול</button>
+                </div>
                 {fieldsError}
                 <Dialog open={progressScreen}>
                     <DialogContent>

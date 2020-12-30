@@ -17,13 +17,6 @@
     justify-content: center;
 }
 
-.buttonSearch{
-    background: transparent;
-    padding: 0.8rem 0.8rem 0.8rem 0.8rem;
-    border-radius: 3rem;
-    border: none;
-    outline: none;
-}
 
 .exitButton{
     background: transparent;
@@ -75,29 +68,44 @@
 	color: #FFF
 }
 
-.search-button{
-    background: #27AE60;
-	color: white;
-    border: 0 none;
-    font-size: 3vh;
-	border-radius: 1px;
-    cursor: pointer;
-    outline: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-	padding: 10px 5px;
-	margin: 10px 5px;
-}
-
-.search-button:hover, .search-button:active {
-    background: #27AE60;
-	box-shadow: 0 0 0 2px #dcddd4, 0 0 0 3px #27AE60;
-}
-
 .button-container{
     display: flex;
     justify-content: center;
-    margin-top: 3vh;
+    margin-top: 5vh;
 }
+
+/* 3D Search Button */
+
+.search-button{
+    font-size: 2.5vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 20vh;
+    margin: auto;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: none;
+    background: #2ecc71;
+    box-shadow: 0 5px 1px #27ae60;
+}
+
+.search-button:hover
+{
+    background: #27ae60;
+    box-shadow: 0 5px 1px #145b32;
+}
+
+.search-button:active
+{
+    border-top: 5px solid white;
+    box-shadow: none;
+}
+
+/* END 3D Search Button */
 
 
 /* Switch Search */

@@ -15,7 +15,26 @@ const styles = {
       color: 'black',
       paddingBottom: '1rem',
       minHeight: '80vh',
-      borderRadius: '1rem',
+      borderRadius: '0.5rem',
+      borderStyle: 'solid',
+      borderColor: 'black',
+      border: 'thin',
+      overflowX: 'hidden',
+      '&::-webkit-scrollbar': {
+        width: '0.4em',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'darkgrey',
+        outline: '1px solid slategrey',
+        borderRadius: '1rem',
+        border: 'none',
+        outline: 'none'
+      }
+
     },
     dialogLabel: {
         color: 'black',
@@ -225,6 +244,7 @@ function AddForm(props){
             setDescriptionErrorMsg('');
             setCategoryErrorMsg('');
             setDescriptionErrorMsg('');
+            setDistrictErrorMsg('');
             const data = new FormData();
             for(const file of photos){
                 data.append('image',file)
@@ -245,21 +265,30 @@ function AddForm(props){
 
     }
 
+    const handleExit = () => {
+        setFieldsError('');
+            setRecaptchaErrorMsg('');
+            setPhotosErrorMsgBigger('');
+            setPhotosErrorMsgNone('');
+            setNameErrorMsg('');
+            setDonorErrorMsg('');
+            setDescriptionErrorMsg('');
+            setCategoryErrorMsg('');
+            setDescriptionErrorMsg('');
+            setDistrictErrorMsg('');
+            setAddForm(false)
+    }
+
     return(
-        <Dialog classes={{ paper: classes.dialogPaper }} open={addForm} fullWidth={true} maxWidth={'md'}>
+        <Dialog classes={{ paper: classes.dialogPaper }} open={addForm} fullWidth={true} maxWidth={'lg'}>
             <form onSubmit={handleSubmit} style={{direction: 'rtl'}}  className='formContainer'>
-                <div style={{fontSize: '3em', fontWeight: 'bold'}}>הגשת מקום חדש</div>
-                <FormControl>
-                <TextField className='fields' label='שם המקום' onChange={handleName}/>
-                </FormControl>
+                <div style={{fontSize: '5vh', fontWeight: 'bold', marginTop: '3vh'}}>הגשת מקום חדש</div>
+                <TextField style={{width: '80%'}} label='שם המקום' onChange={handleName}/>
                 {nameErrorMsg}<br/>
-                <FormControl>
-                <TextField className='fields'  label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
-                </FormControl>
+                <TextField style={{width: '80%'}}  label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
                 {donorErrorMsg}<br/>
-                <FormControl className='select-fields'>
                     <InputLabel>בחירת איזור</InputLabel>
-                    <Select className='fields' label='איזור' onChange={handleDistrict}>
+                    <Select style={{width: '80%'}} label='איזור' onChange={handleDistrict}>
                     {districtOptions.map(district => (
                                 <MenuItem key={district} value={district}>
                                     <ListItemText primary={district} />
@@ -267,11 +296,9 @@ function AddForm(props){
                                 ))
                     }
                     </Select>
-                </FormControl>
                 {districtErrorMsg}<br/>
-                <FormControl className='select-fields'>
                     <InputLabel>בחירת סוג</InputLabel>
-                    <Select className='fields' label='סוג' onChange={handleCategory}>
+                    <Select style={{width: '80%'}} label='סוג' onChange={handleCategory}>
                     {categoryOptions.map(district => (
                                 <MenuItem key={district} value={district}>
                                     <ListItemText primary={district} />
@@ -279,29 +306,22 @@ function AddForm(props){
                                 ))
                     }
                     </Select>
-                </FormControl>
                 {categoryErrorMsg}<br/>
-                <FormControl>
-                <TextField className='fields' multiline variant='filled' rows='10' type='rtl' label='תיאור' onChange={handleDescription}/>
-                </FormControl>
+                <TextField style={{width: '80%'}} multiline variant='filled' rows='10' type='rtl' label='תיאור' onChange={handleDescription}/>
                 {descriptionErrorMsg}<br/>
                 <input accept="image/*" style={{ display: 'none' }} id="raised-button-file" multiple type="file" onChange={handlePhotos}/>
                     <label htmlFor="raised-button-file">
-                        <Button style={{fontSize: '1.7rem'}} variant="contained" color='primary' component="span">
+                        <Button style={{fontSize: '3vh'}} variant="contained" color='primary' component="span">
                         העלאת תמונות
                         </Button>
                     </label>
                     {photosErrorMsgBigger}{photosErrorMsgNone}<br/>
-                <ReCAPTCHA  sitekey={process.env.REACT_APP_RECAPTCHA_KEY} onChange={() => setRecaptcha(true)} onExpired={() => setRecaptcha(false)}/>
+                <ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_KEY} onChange={() => setRecaptcha(true)} onExpired={() => setRecaptcha(false)}/>
                 {recaptchaErrorMsg}<br/>
-                <Grid container spacing={2} direction='row' alignContent='center' justify='center'>
-                    <Grid item>
-                         <Button type='submit' variant="contained" color='primary' >שליחת בקשה</Button>
-                    </Grid>
-                    <Grid item>
-                         <Button type='reset' variant="contained" color='primary' onClick={() => setAddForm(false)}>ביטול</Button>
-                    </Grid>
-                </Grid>
+                <div className='buttons-container'>
+                    <button className='addForm-buttons' type='submit'>שליחת בקשה</button>
+                    <button className='addForm-buttons' type='reset' onClick={handleExit}>ביטול</button>
+                </div>
                 {fieldsError}
                 <Dialog open={progressScreen}>
                     <DialogContent>
