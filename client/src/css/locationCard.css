@@ -23,14 +23,10 @@
     box-shadow: 0 5px 1px #27ae60;
 }
 
-.card-buttons:hover
+.card-buttons:hover , .card-buttons:active
 {
     background: #27ae60;
     box-shadow: 0 5px 1px #145b32;
 }
 
-.card-buttons:active
-{
-    border-top: 5px solid white;
-    box-shadow: none;
-}
+

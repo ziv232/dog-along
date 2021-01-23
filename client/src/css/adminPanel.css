@@ -1,7 +1,6 @@
 
 body {
-    background: radial-gradient(#e7e7e4,#dcddd4);
-}
+    background: radial-gradient(#e7e7e4,#dcddd4);}
 
 .container{
     text-align: center;
@@ -10,6 +9,7 @@ body {
     justify-content: center;
     align-items: center;
     justify-items: center;
+    margin-top: 10vh;
 }
 .title{
     margin-top: 20vh;
@@ -47,4 +47,34 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.login-button{
+    font-size: 3vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 20vh;
+    margin: auto;
+    margin-top: 3vh;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: none;
+    background: #2ecc71;
+    box-shadow: 0 5px 1px #27ae60;
+}
+
+.login-button:hover
+{
+    background: #27ae60;
+    box-shadow: 0 5px 1px #145b32;
+}
+
+.login-button:active
+{
+    border-top: 5px solid white;
+    box-shadow: none;
 }

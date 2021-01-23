@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Collapse, Dialog, DialogContent, Grow} from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import { formatRelative, parseISO } from 'date-fns'
 import { he } from 'date-fns/locale'
+import "react-image-gallery/styles/css/image-gallery.css";
+import Slider from 'react-image-gallery';
 import '../css/locationCard.css';
 
 
@@ -14,10 +16,24 @@ const styles = {
     },
     dialogPaper: {
         background: '#FFFFFF',
-          color: 'black',
-          borderRadius: '0.5rem',
-          maxWidth: '70vw'
-
+        color: 'black',
+        borderRadius: '0.5rem',
+        maxHeight: '90vh',
+        overflowX: 'hidden',
+      '&::-webkit-scrollbar': {
+        width: '0.4em',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'darkgrey',
+        outline: '1px solid slategrey',
+        borderRadius: '1rem',
+        border: 'none',
+        outline: 'none'
+      }
     
         },
   };
@@ -26,10 +42,11 @@ const styles = {
 function LocationCard(props){
 
     const {open, location, setOpen, setInfoWindow, setSelectedPlace, classes} = props
+    const [photos, setPhotos] = useState(location.photos.urls.map( image => {return {original: image, thumbnail: image}}));
 
     return(
-        <Dialog classes={{ paper: classes.dialogPaper }} TransitionComponent={Grow} open={open} onBackdropClick={() => setOpen(false)} >
-            <img style={{maxHeight: '50vh', maxWidth: '70vw'}} src={location.photos.urls[0]}></img>
+        <Dialog classes={{ paper: classes.dialogPaper }} fullWidth={true} maxWidth={'sm'} TransitionComponent={Grow} open={open} onBackdropClick={() => setOpen(false)} >
+        <Slider items={photos} autoPlay={true} slideInterval={5000} showThumbnails={false} showPlayButton={false} showBullets={false} showIndex={false} showFullscreenButton={false} showNav={false}/>
             <div style={{textAlign: 'center', direction: 'rtl', fontSize: '3vh', marginTop: '4vh', marginBottom: '1vh'}}>
                     {location.name}
             </div>

@@ -19,7 +19,8 @@ const mapConStyle = {
 }
 const options = {
     disableDefaultUI: true,
-    zoomControl: false
+    zoomControl: true,
+    disableDoubleClickZoom: true,
 }
 
 const libraries = []
@@ -94,9 +95,8 @@ function AdminMap(props){
             center={{ lat: latCenter, lng: lngCenter }}
             onLoad={handleLoad}
             onCenterChanged={handleCenterChanged}>
-            <div className='buttonContainer'>
-                <div></div>
-                <Fab color='primary' className='logoutButton' onClick={logOut}>התנתק</Fab>
+            <div className='admin-buttons-container'>
+                <button className='logoutButton' onClick={logOut}>התנתק</button>
             </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => requests.map(request => {
                    return <Marker clusterer={clusterer} key={request._id} position={{lat: request.location.coordinates[1], lng: request.location.coordinates[0]}} 

@@ -11,7 +11,6 @@ router.use(cloudinaryConfig);
 router.post('/', multerUploads, (req, res) => {
     const urls = [];
     const publicIds = [];
-
     if(req.files) {
        let res_promises = req.files.map(file => new Promise((resolve, reject) => {
             const dUri = new DataURIParser();
@@ -28,6 +27,10 @@ router.post('/', multerUploads, (req, res) => {
                     publicIds.push(res.public_id);
                     //console.log(res);
                 }
+            },
+            {
+                folder: req.body.name,
+                use_filename: true
             })
         }))
         

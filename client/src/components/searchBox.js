@@ -5,6 +5,7 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import '../css/searchBox.css';
 import SvgSearchButton from './svgSearchButton';
 import SvgExitButton from './svgExitButton';
+import {globalDistricts, globalCategories} from '../utils/variables';
 
 const styles = {
     dialogPaper: {
@@ -22,7 +23,7 @@ const styles = {
 
   const PrettoSlider = withStyles({
     root: {
-      color: '#52af77',
+      color: '#2ecc71',
       height: 8,
       width: 250,
       marginTop: '3vh',
@@ -60,8 +61,6 @@ function SearchBox(props){
     const [categories, setCategories] = useState([]);
     const [searchBy, setSearchBy] = useState('region');
     const [radius, setRadius] = useState(null);
-    const districtOptions = ['צפון','מרכז','דרום'];
-    const categoryOptions = ['גינות כלבים','חופים','מסלולי טיולים','עמותות','מקורות מים']
 
     const handleDistrict = (event) => {
         setDistricts(event.target.value)
@@ -147,7 +146,7 @@ function SearchBox(props){
                             input={<Input />}
                             renderValue={selected => selected.join(", ")}
                             >
-                            {districtOptions.map(district => (
+                            {globalDistricts.map(district => (
                                 <MenuItem key={district} value={district}>
                                 <Checkbox color='primary' checked={districts.indexOf(district) > -1} />
                                 <ListItemText primary={district} />
@@ -167,7 +166,7 @@ function SearchBox(props){
                             input={<Input />}
                             renderValue={selected => selected.join(", ")}
                             >
-                            {categoryOptions.map(category => (
+                            {globalCategories.map(category => (
                                 <MenuItem key={category} value={category}>
                                 <Checkbox color='primary' checked={categories.indexOf(category) > -1} />
                                 <ListItemText primary={category} />

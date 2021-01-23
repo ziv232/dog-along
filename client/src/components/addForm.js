@@ -6,6 +6,9 @@ import {Grid, Dialog, Button, DialogTitle, DialogContent,Form, FormControl, Text
 import { withStyles } from "@material-ui/core/styles";
 import '../css/addForm.css';
 
+import {globalDistricts, globalCategories} from '../utils/variables';
+
+
 //Components
 import AddStoryForm from './addStoryForm';
 
@@ -49,9 +52,6 @@ const styles = {
         fontWeight: 500
     }
   };
-
-  const districtOptions = ['צפון','מרכז','דרום'];
-  const categoryOptions = ['גינות כלבים','חופים','מסלולי טיולים','עמותות','מקורות מים']
 
 
 function AddForm(props){
@@ -289,7 +289,7 @@ function AddForm(props){
                 {donorErrorMsg}<br/>
                     <InputLabel>בחירת איזור</InputLabel>
                     <Select style={{width: '80%'}} label='איזור' onChange={handleDistrict}>
-                    {districtOptions.map(district => (
+                    {globalDistricts.map(district => (
                                 <MenuItem key={district} value={district}>
                                     <ListItemText primary={district} />
                                 </MenuItem>
@@ -299,7 +299,7 @@ function AddForm(props){
                 {districtErrorMsg}<br/>
                     <InputLabel>בחירת סוג</InputLabel>
                     <Select style={{width: '80%'}} label='סוג' onChange={handleCategory}>
-                    {categoryOptions.map(district => (
+                    {globalCategories.map(district => (
                                 <MenuItem key={district} value={district}>
                                     <ListItemText primary={district} />
                                 </MenuItem>

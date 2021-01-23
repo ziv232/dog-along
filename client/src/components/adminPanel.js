@@ -66,11 +66,7 @@ function AdminPanel(){
                     </Grid>
                     </Grid>
                 </Grid>
-                <Grid className='form' item xs={12}>
-                    <Button color="primary" size='large'  type="submit" variant="contained">
-                    התחבר
-                    </Button>
-                </Grid>
+                    <button className='login-button'>התחבר</button>
                 </Grid>
          </form>
          <div className={`${(errorMsg === null || errorMsg === '') ? 'noclass' : 'errorMsg'}`}>{errorMsg}</div>

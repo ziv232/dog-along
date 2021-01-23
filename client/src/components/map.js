@@ -34,7 +34,8 @@ const mapConStyle = {
 const options = {
     disableDefaultUI: true,
     zoomControl: true,
-    disableDoubleClickZoom: true
+    disableDoubleClickZoom: true,
+
 }
 
 const libraries = []
@@ -105,9 +106,18 @@ function Map(props){
             () => null
         );
     }
-    
+
+    //Disable Context Menu
+    // document.addEventListener("contextmenu", function(evt){
+    //     evt.preventDefault();
+    //     evt.stopPropagation();
+    // });
 
     const addPlace = (event) => {
+        document.addEventListener("contextmenu", function(evt){
+            evt.preventDefault();
+            evt.stopPropagation();
+        });
         const coordinates = event.latLng.toJSON();
         setToAdd(coordinates);
         setToAddAsArray([coordinates.lat,coordinates.lng])
@@ -182,6 +192,7 @@ function Map(props){
                 <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces} setGeoLocation={setGeolocation}
                  panLocation={panLocation} setGeoLat={setGeoLat} setGeoLng={setGeoLng}/>
                 {selectedPlace && (<LocationCard open={isSelected} location={selectedPlace} setOpen={setIsSelected} setInfoWindow={setInfoWindow} setSelectedPlace={setSelectedPlace}/>)}
+
             </GoogleMap>
         )
 }
