@@ -62,13 +62,17 @@ router.post('/login', async (req, res) => {
         //       res.send(result);
         //     }
         // })
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_1,{expiresIn: '15s'});
-        const refreshToken = jwt.sign({id: user._id}, process.env.JWT_SECRET_2, {expiresIn: '1h'});
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_1,{expiresIn: '20s'});
+        const refreshToken = jwt.sign({id: user._id}, process.env.JWT_SECRET_2, {expiresIn: '1d'});
         //Saving the refreshToken
         const newRefreshToken = new RefreshToken({
             userId: user._id,
             token: refreshToken
         })
+        //Deleting old refresh tokens
+        const deleteOldTokes = await RefreshToken.deleteMany({
+            userId: user._id
+        });
 
         const saveRefreshToken = await newRefreshToken.save();
         if(!saveRefreshToken){

@@ -65,6 +65,7 @@ function AddForm(props){
     const [description, setDescription] = useState('');
     const [photos, setPhotos] = useState([]);
     const [donor, setDonor] = useState('');
+    const [instaName, setInstaName] = useState('');
     const [recaptcha, setRecaptcha] = useState(false);
 
 //Error Handling States
@@ -109,6 +110,10 @@ function AddForm(props){
         setDonor(event.target.value);
     }
 
+    const handleInstaName = (event) => {
+        setInstaName(event.target.value);
+    }
+
     const sendRequest = (urls, publicIds) => {
         const data = {
             location: {type: 'Point', coordinates: [coordinates[1], coordinates[0]]},
@@ -119,6 +124,7 @@ function AddForm(props){
             photos: {urls: urls,
                 publicIds: publicIds},
             donor: donor,
+            donorInstagram: instaName,
             comments: [],
             reference: null
         }
@@ -279,14 +285,16 @@ function AddForm(props){
             setAddForm(false)
     }
 
+
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={addForm} fullWidth={true} maxWidth={'lg'}>
             <form onSubmit={handleSubmit} style={{direction: 'rtl'}}  className='formContainer'>
                 <div style={{fontSize: '5vh', fontWeight: 'bold', marginTop: '3vh'}}>הגשת מקום חדש</div>
                 <TextField style={{width: '80%'}} label='שם המקום' onChange={handleName}/>
                 {nameErrorMsg}<br/>
-                <TextField style={{width: '80%'}}  label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
+                <TextField style={{width: '80%'}}  label='השם שלך (לצורך קרדיט)' onChange={handleDonor}/>
                 {donorErrorMsg}<br/>
+                <TextField style={{width: '80%'}}  label='שם המשתמש באינסטגרם (אופציונלי)' onChange={handleInstaName}/><br/>
                     <InputLabel>בחירת איזור</InputLabel>
                     <Select style={{width: '80%'}} label='איזור' onChange={handleDistrict}>
                     {globalDistricts.map(district => (

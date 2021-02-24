@@ -15,6 +15,7 @@ import MyInfoWindow from './infoWindow';
 import AddForm from './addForm';
 import LocationCard from './locationCard';
 import AddMsg from './addMsg';
+import LoadingScreen from './loadingScreen';
 
 //Icons
 import locationMarker from '../icons/locationMarker.svg';
@@ -56,6 +57,7 @@ function Map(props){
     const [addMsg, setAddMsg] = useState(false);
     const [addForm, setAddForm] = useState(false);
     const [storiesArray, setStoriesArray] = useState([]);
+    const [openLoadingScreen, setLoadingScreen] = useState(false);
 
     //Geolocation
     const [isGeolocation, setGeolocation] = useState(false);
@@ -142,6 +144,7 @@ function Map(props){
             console.log(res.data);
             setStoriesArray(res.data);
             const stories = [selectedPlace].concat(res.data);
+            stories.reverse();
             setStoriesArray(stories);
             console.log(storiesArray)
         })
@@ -155,10 +158,13 @@ function Map(props){
             console.log(res.data);
             setStoriesArray(res.data);
             const stories = [place].concat(res.data);
+            stories.reverse();
+            setSelectedPlace(stories[0]);
             setStoriesArray(stories);
             console.log(storiesArray)
         })
         .catch(err => console.log(err));
+        setLoadingScreen(false);
     }
 
 
@@ -179,7 +185,7 @@ function Map(props){
                 </div>
             <MarkerClusterer minimumClusterSize={2} gridSize={50}>{ clusterer => places.map(place => {
                    return <Marker clusterer={clusterer} key={place._id} position={{lat: place.location.coordinates[1], lng: place.location.coordinates[0]}} 
-                   onClick={() => { setSelectedPlace(place); setIsSelected(true); fetchDetails(place);}}   
+                   onClick={() => {setLoadingScreen(true); fetchDetails(place);  setIsSelected(true);}}   
                                    onCloseClick={() => {setIsSelected(false); setSelectedPlace(null);}} />
                 })}
             </MarkerClusterer>
@@ -191,7 +197,9 @@ function Map(props){
                 <Terms terms={props.terms} setTerms={props.setTerms}/>
                 <SearchBox openSearchBox={openSearch} setOpenSearchBox={setOpenSearch} places={places} setPlaces={setPlaces} setGeoLocation={setGeolocation}
                  panLocation={panLocation} setGeoLat={setGeoLat} setGeoLng={setGeoLng}/>
-                {selectedPlace && (<LocationCard open={isSelected} location={selectedPlace} setOpen={setIsSelected} setInfoWindow={setInfoWindow} setSelectedPlace={setSelectedPlace}/>)}
+                {selectedPlace && (<LocationCard open={isSelected} location={selectedPlace} setOpen={setIsSelected}
+                setInfoWindow={setInfoWindow} setSelectedPlace={setSelectedPlace} storiesArray={storiesArray}/>)}
+                <LoadingScreen openLoadingScreen={openLoadingScreen}/>
 
             </GoogleMap>
         )

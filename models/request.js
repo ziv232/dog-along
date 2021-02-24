@@ -45,6 +45,10 @@ const RequestSchema = new Schema({
         type: String,
         required: true
     },
+    donorInstagram: {
+        type: String,
+        required: false
+    },
     comments: {
         type: Array,
         required: true

@@ -15,7 +15,7 @@ const styles = {
         maxHeight: '50vh'
     },
     dialogPaper: {
-        background: '#FFFFFF',
+        background: 'radial-gradient(#eeeeec,#eff0ea)',
         color: 'black',
         borderRadius: '0.5rem',
         maxHeight: '90vh',
@@ -41,7 +41,7 @@ const styles = {
 
 function LocationCard(props){
 
-    const {open, location, setOpen, setInfoWindow, setSelectedPlace, classes} = props
+    const {open, location, setOpen, setInfoWindow, setSelectedPlace, storiesArray, classes} = props
     const [photos, setPhotos] = useState(location.photos.urls.map( image => {return {original: image, thumbnail: image}}));
 
     return(
@@ -50,10 +50,16 @@ function LocationCard(props){
             <div style={{textAlign: 'center', direction: 'rtl', fontSize: '3vh', marginTop: '4vh', marginBottom: '1vh'}}>
                     {location.name}
             </div>
-            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '1.8vh', color: 'grey' , marginTop: '1vh'}}>
+            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '2.2vh',fontWeight: 'bold', color: 'grey' , marginTop: '1vh'}}>
+               מקום זה מכיל {storiesArray.length} סיפורים
+            </div>
+            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '2vh', fontWeight: 'bold', color: 'grey' , marginTop: '2vh'}}>
+               הסיפור העדכני ביותר:
+            </div>          
+            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '1.8vh', color: 'grey' , marginTop: '0.5vh'}}>
                נוסף על ידי {location.donor}
             </div>
-            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '1.8vh', color: 'grey' , marginTop: '1vh', marginBottom: '4vh'}}>
+            <div style={{textAlign: 'center', direction: 'rtl', fontSize: '1.8vh', color: 'grey' , marginTop: '0.5vh', marginBottom: '4vh'}}>
                {formatRelative(parseISO(location.date), new Date(), { locale: he })} 
             </div>
             <div className='buttons-container'>

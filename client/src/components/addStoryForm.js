@@ -53,6 +53,7 @@ function AddStoryForm(props){
     const [description, setDescription] = useState('');
     const [photos, setPhotos] = useState([]);
     const [donor, setDonor] = useState('');
+    const [instaName, setInstaName] = useState('');
     const [recaptcha, setRecaptcha] = useState(false);
 
 //Error Handling States
@@ -82,6 +83,10 @@ function AddStoryForm(props){
         setDonor(event.target.value);
     }
 
+    const handleInstaName = (event) => {
+        setInstaName(event.target.value);
+    }
+
     const sendRequest = (urls, publicIds) => {
         console.log(location);
         const data = {
@@ -93,6 +98,7 @@ function AddStoryForm(props){
             photos: {urls: urls,
                 publicIds: publicIds},
             donor: donor,
+            donorInstagram: instaName,
             comments: [],
             reference: location._id
         }
@@ -225,6 +231,7 @@ function AddStoryForm(props){
                 <div style={{fontSize: '4vh', marginTop: '2vh', marginBottom: '2vh', fontWeight: 'bold'}}>הוספת הסיפור שלך</div>
                     <TextField style={{width: '80%'}}   label='השם שלך(לצורך קרדיט)' onChange={handleDonor}/>
                 {donorErrorMsg}<br/>
+                <TextField style={{width: '80%'}}  label='שם המשתמש באינסטגרם (אופציונלי)' onChange={handleInstaName}/><br/>
                     <TextField style={{width: '80%'}} multiline variant='filled' rows='10' type='rtl' label='תיאור' onChange={handleDescription}/>
                 {descriptionErrorMsg}<br/>
                 <input accept="image/*" style={{ display: 'none' }} id="raised-button-file" multiple type="file" onChange={handlePhotos}/>

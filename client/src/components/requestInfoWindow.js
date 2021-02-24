@@ -11,6 +11,10 @@ import { he } from 'date-fns/locale'
 import axios from 'axios';
 
 
+//Icons
+import InstagramIcon from './svgInstagram';
+
+
 const styles = {
     dialogPaper: {
     background: 'radial-gradient(#e7e7e4,#dcddd4)',
@@ -53,6 +57,7 @@ function RequestInfoWindow(props){
                publicIds: myPlace.photos.publicIds
             },
             donor: myPlace.donor,
+            donorInstagram: myPlace.donorInstagram,
             comments: myPlace.comments,
             reference: myPlace.reference
         }
@@ -83,6 +88,10 @@ function RequestInfoWindow(props){
         }
     }
 
+    const openInstagramUser = (donorInsta) => {
+        window.open(`http://instagram.com/${donorInsta}`);
+    }
+
 
     return(
         <Dialog classes={{ paper: classes.dialogPaper }} open={openInfoWindow} fullWidth={true} maxWidth={'md'}>
@@ -92,6 +101,12 @@ function RequestInfoWindow(props){
                 <div style={{direction: 'rtl', fontSize: '2vh', marginTop: '2vh', color: 'grey'}}>
                     נוסף על ידי {myPlace.donor}
                 </div>
+                {(myPlace.donorInstagram == undefined || myPlace.donorInstagram == '') ? ''
+                    :   
+                        <div style={{direction: 'ltr', display: 'flex', justifyContent: 'space-around', fontSize: '2.3vh', marginTop: '2vh', marginBottom: '2vh', color: 'blue', cursor: 'pointer'}}
+                        onClick={() => openInstagramUser(myPlace.donorInstagram)}>
+                            <InstagramIcon/><div style={{width: '1vh'}}></div><div>{myPlace.donorInstagram}</div>
+                        </div>}
                 <div style={{direction: 'rtl', fontSize: '2vh', color: 'grey'}}>
                 {formatRelative(parseISO(myPlace.date), new Date(), { locale: he })}
                 </div>

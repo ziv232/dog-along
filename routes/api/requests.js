@@ -6,6 +6,7 @@ const Request = require('../../models/request');
 
 router.post('/', (req, res) => {
     const data = req.body;
+    console.log(data);
     const newRequest = new Request(data);
     newRequest.save().then(data => {
         res.status(200).json({data})

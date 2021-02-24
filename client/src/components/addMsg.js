@@ -7,7 +7,7 @@ import '../css/addMsg.css';
 const styles = {
     dialogPaper: {
       top: '-20%',
-      background: 'radial-gradient(#e7e7e4,#dcddd4)',
+      background: 'radial-gradient(#eeeeec,#eff0ea)',
       color: 'black',
       minHeight: '15vh',
       borderRadius: '1rem',
